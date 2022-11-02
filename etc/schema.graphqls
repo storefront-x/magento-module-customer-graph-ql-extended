@@ -1,0 +1,3 @@
+type CustomerToken {
+    phpSessionId: String @doc(description: "The PHP Session ID")
+}

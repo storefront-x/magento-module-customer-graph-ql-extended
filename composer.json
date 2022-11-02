@@ -1,0 +1,29 @@
+{
+    "name": "storefront-x/magento-module-customer-graph-ql-extended",
+    "description": "Magento 2 module allows to login only once and can access both SFX and Magento sections requiring login, extends mutation for generateCustomerToken with phpSessionId",
+    "homepage": "https://github.com/storefront-x/magento-module-customer-graph-ql-extended",
+    "type": "magento2-module",
+    "license": [
+        "MIT"
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": ">=7.4",
+        "magento/framework": "*",
+        "magento/module-graph-ql": "*",
+        "magento/module-customer-graph-ql": "*",
+        "magento/module-store": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "StorefrontX\\CustomerGraphQlExtended\\": ""
+        }
+    }
+
+}
+
