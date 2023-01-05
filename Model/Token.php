@@ -4,45 +4,37 @@ declare(strict_types=1);
 
 namespace StorefrontX\CustomerGraphQlExtended\Model;
 
+use Magento\Framework\Stdlib\DateTime\DateTime;
+
 /**
  * Class Token
  * @package StorefrontX\CustomerGraphQlExtended\Model
  */
 class Token
 {
-    /**
-     * @var \Magento\Framework\Stdlib\DateTime\DateTime
-     */
-    private $dateHelper;
-
+    /** @var DateTime */
+    private $dateTime;
 
     /**
      * @param \StorefrontX\CustomerGraphQlExtended\Helper\Oauth\Data $dataHelper
+     * @param DateTime $dateTime
      */
     public function __construct(
-        \StorefrontX\CustomerGraphQlExtended\Helper\Oauth\Data $dataHelper
+        \StorefrontX\CustomerGraphQlExtended\Helper\Oauth\Data $dataHelper,
+        DateTime $dateTime
     ){
         $this->dataHelper = $dataHelper;
+        $this->dateTime = $dateTime;
     }
 
     public function getToken(){
 
         $token = false;
 
-        $headers = [];
-        foreach ($_SERVER as $name => $value)
-        {
-            if (substr($name, 0, 5) == 'HTTP_')
-            {
-                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
-            }
-        }
-        $authorizationBearer = '';
+        $authorizationBearer = "";
 
-        if(isset($headers['Authorization'])) {
-            $authorizationBearer = $headers['Authorization'];
-        } else if(isset($headers['Authorization'])) {
-            $authorizationBearer = $headers['Authorization'];
+        if(isset($_SERVER["HTTP_AUTHORIZATION"])) {
+            $authorizationBearer = $_SERVER["HTTP_AUTHORIZATION"];
         } else {
             $authorizationBearer = "";
         }
@@ -66,25 +58,8 @@ class Token
     public function isValidForTokenExchange($tokenUpdatedAt)
     {
         $expiry = $this->dataHelper->getCustomerExpirationPeriod()*3600;
-        $currentTimestamp = $this->getDateHelper()->gmtTimestamp();
-        $updatedTimestamp = $this->getDateHelper()->gmtTimestamp($tokenUpdatedAt);
+        $currentTimestamp = $this->dateTime->gmtTimestamp();
+        $updatedTimestamp = $this->dateTime->gmtTimestamp($tokenUpdatedAt);
         return $expiry > ($currentTimestamp - $updatedTimestamp);
     }
-
-    /**
-     * The getter function to get the new DateTime dependency
-     *
-     * @return \Magento\Framework\Stdlib\DateTime\DateTime
-     *
-     * @deprecated 100.0.6
-     */
-    private function getDateHelper()
-    {
-        if ($this->dateHelper === null) {
-            $this->dateHelper = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\Stdlib\DateTime\DateTime::class);
-        }
-        return $this->dateHelper;
-    }
-
 }
