@@ -1,3 +1,13 @@
 type CustomerToken {
     phpSessionId: String @doc(description: "The PHP Session ID")
 }
+
+type Query {
+    tokenValidation: TokenValidation @resolver(class: "StorefrontX\\CustomerGraphQlExtended\\Model\\Resolver\\IsValidToken")
+}
+
+type TokenValidation {
+    isValidToken: Boolean @doc(description: "Is token valid")
+    validationMessage: String @doc(description: "Validation message")
+    statusCode: String @doc(description: "Status code")
+}

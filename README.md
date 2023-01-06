@@ -6,6 +6,8 @@ Module for Magento 2
 SFX uses phpSessionId to set cookie and does not need to login user again through native Magento FE.
 So, customer logs only once and can access both SFX and Magento sections requiring login.
 
+Check is customer token valid.
+
 ## License
 
 The module is licensed under the MIT license.
