@@ -6,3 +6,4 @@
 ## [1.0.1] - 2023-01-04
 ### Added
 - added token validation check.
+- removed session
