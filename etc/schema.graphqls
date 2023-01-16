@@ -1,7 +1,3 @@
-type CustomerToken {
-    phpSessionId: String @doc(description: "The PHP Session ID")
-}
-
 type Query {
     tokenValidation: TokenValidation @resolver(class: "StorefrontX\\CustomerGraphQlExtended\\Model\\Resolver\\IsValidToken")
 }
