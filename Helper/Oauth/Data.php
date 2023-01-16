@@ -18,7 +18,7 @@ class Data
     /**#@+
      * Consumer xpath settings
      */
-    const XML_PATH_CUSTOMER_EXPIRATION_PERIOD = 'oauth/access_token_lifetime_customer';
+    const XML_PATH_CUSTOMER_EXPIRATION_PERIOD = 'oauth/access_token_lifetime/customer';
 
     const CUSTOMER_EXPIRATION_PERIOD_DEFAULT = 3600;
 
