@@ -23,7 +23,8 @@
         "psr-4": {
             "StorefrontX\\CustomerGraphQlExtended\\": ""
         }
-    }
+    },
+    "abandoned": true
 
 }
 

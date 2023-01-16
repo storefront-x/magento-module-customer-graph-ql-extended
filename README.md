@@ -1,3 +1,6 @@
+# Abandoned
+Please do not use this package at all
+
 # Customer GraphQl Extended
 Module for Magento 2
 
