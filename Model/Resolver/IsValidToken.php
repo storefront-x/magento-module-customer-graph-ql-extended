@@ -46,21 +46,23 @@ class IsValidToken implements ResolverInterface
     )
     {
         $token = $this->token->getToken();
-
         $tokenUpdatedAt = $this->tokenFactory->create()->loadByToken($token)->getCreatedAt();
 
-        $isValidToken = $this->token->isValidForTokenExchange($tokenUpdatedAt);
+        $isValidExpirationTime = $this->token->isValidForTokenExchange($tokenUpdatedAt);
 
         $tokenMessage = null;
         $statusCode = null;
 
-        if (!$isValidToken) {
+        if ($isValidExpirationTime && $tokenUpdatedAt) {
+            $validToken = true;
+        } else {
             $tokenMessage = __("You are not logged in, please login.");
             $statusCode = __("HTTP 401");
+            $validToken = false;
         }
 
         return [
-            "isValidToken" => $isValidToken,
+            "isValidToken" => $validToken,
             "validationMessage" => $tokenMessage,
             "statusCode" => $statusCode
         ];
