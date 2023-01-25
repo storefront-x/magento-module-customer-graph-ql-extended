@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace StorefrontX\CustomerGraphQlExtended\Model\Resolver;
 
-use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlAuthorizationException;
-use Magento\Framework\GraphQl\Exception\GraphQlInputException;
-use Magento\Framework\GraphQl\Query\ResolverInterface;
-use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Integration\Model\Oauth\TokenFactory as TokenModelFactory;
 use StorefrontX\CustomerGraphQlExtended\Model\Token;
 
-class IsValidToken implements ResolverInterface
+class IsValidToken
 {
 
     /** @var TokenModelFactory */
@@ -33,37 +29,22 @@ class IsValidToken implements ResolverInterface
         $this->token = $token;
     }
 
-
     /**
-     * @inheritdoc
+     * Token validation
+     *
+     * @return bool
      */
-    public function resolve(
-        Field $field,
-              $context,
-        ResolveInfo $info,
-        array $value = null,
-        array $args = null
-    )
+    public function validation()
     {
         $token = $this->token->getToken();
-
         $tokenUpdatedAt = $this->tokenFactory->create()->loadByToken($token)->getCreatedAt();
 
-        $isValidToken = $this->token->isValidForTokenExchange($tokenUpdatedAt);
+        $isValidExpirationTime = $this->token->isValidForTokenExchange($tokenUpdatedAt);
 
-        $tokenMessage = null;
-        $statusCode = null;
-
-        if (!$isValidToken) {
-            $tokenMessage = __("You are not logged in, please login.");
-            $statusCode = __("HTTP 401");
+        if ($isValidExpirationTime && $tokenUpdatedAt) {
+            return true;
         }
-
-        return [
-            "isValidToken" => $isValidToken,
-            "validationMessage" => $tokenMessage,
-            "statusCode" => $statusCode
-        ];
+        return false;
     }
 
 }

@@ -1,7 +1,7 @@
 # Customer GraphQl Extended
 Module for Magento 2
 
-**Customer GraphQl Extended** Extends mutation for customer token validation
+**Customer GraphQl Extended** Added token validation for all endpoints
 
 ## License
 
