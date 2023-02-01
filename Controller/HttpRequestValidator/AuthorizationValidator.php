@@ -28,7 +28,7 @@ class AuthorizationValidator
 
     /**
      * Validation authorization code
-     * 
+     *
      * @param HttpRequestInterface $request
      * @return void
      * @throws GraphQlAuthorizationException
@@ -55,6 +55,10 @@ class AuthorizationValidator
     public function isNeedNodeValidation($request){
 
         $graphqlPublicEndpoint=$this->scopeConfig->getValue('magexo_logger/graphql/permitted_endpoint');
+
+        if(!$graphqlPublicEndpoint) {
+            return true;
+        }
         $publicEndpoint = explode(";", $graphqlPublicEndpoint);
 
         $queryContent = json_decode($request->getContent(),true);
