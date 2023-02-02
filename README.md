@@ -7,6 +7,17 @@ it should be specified endpoints in this constant
 oauth/access_token_lifetime/customer.
 For example removeCouponFromCart, setShippingMethodsOnCart ...
 
+Confirmation subscriber for newsletter endpoint
+mutation{
+    confirmSubscribeEmailToNewsletter(
+        subscriber_id:"*"
+        subscriber_confirm_code:"*******"
+    )
+    {
+        status
+    }
+}
+
 ## License
 
 The module is licensed under the MIT license.
