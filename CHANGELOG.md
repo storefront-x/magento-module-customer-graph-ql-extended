@@ -8,6 +8,10 @@
 - added token validation check.
 - removed session
 
-## [1.0.2] - 2023-01-04
+## [1.0.6] - 2023-01-04
 ### Modified
 - Modified token validation check.
+
+## [1.0.7] - 2023-01-04
+### Added
+- Confirmation subscriber for newsletter.

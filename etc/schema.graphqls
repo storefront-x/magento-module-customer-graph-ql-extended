@@ -1,0 +1,17 @@
+type Mutation {
+    confirmSubscribeEmailToNewsletter(
+        subscriber_id: String! @doc(description: "The subscriber id.")
+        subscriber_confirm_code: String! @doc(description: "The subscriber confirmation code.")
+    ): confirmSubscribeEmailToNewsletter
+    @resolver(class: "StorefrontX\\CustomerGraphQlExtended\\Model\\Resolver\\Newsletter\\ConfirmSubscribe")
+    @doc(description: "Confirm subscribe for newsletter.")
+}
+
+type confirmSubscribeEmailToNewsletter {
+    status: SubscriptionStatusesEnum @doc(description: "Subscriber status.")
+}
+
+enum SubscriptionStatusesEnum @doc(description: "Indicates the status of the request.") {
+    NOT_ACTIVE
+    SUBSCRIBED
+}
