@@ -73,7 +73,7 @@ class ConfirmSubscribe implements ResolverInterface
 
         $subscriber = $this->subscriberFactory->create()->load($id);
 
-        if ($subscriber->getId() && $subscriber->getCode()) {
+        if (!empty($subscriber->getId()) && !empty($subscriber->getCode())) {
             if ($subscriber->confirm($code)) {
                 $status = $this->enumLookup->getEnumValueFromField(
                     'SubscriptionStatusesEnum',
