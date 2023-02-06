@@ -71,25 +71,23 @@ class ConfirmSubscribe implements ResolverInterface
             );
         }
 
-        if ($id && $code) {
-            $subscriber = $this->subscriberFactory->create()->load($id);
+        $subscriber = $this->subscriberFactory->create()->load($id);
 
-            if ($subscriber->getId() && $subscriber->getCode()) {
-                if ($subscriber->confirm($code)) {
-                    $status = $this->enumLookup->getEnumValueFromField(
-                        'SubscriptionStatusesEnum',
-                        (string)$subscriber->getSubscriberStatus()
-                    );
-                } else {
-                    throw new GraphQlInputException(
-                        __('This is an invalid subscription confirmation code.')
-                    );
-                }
+        if ($subscriber->getId() && $subscriber->getCode()) {
+            if ($subscriber->confirm($code)) {
+                $status = $this->enumLookup->getEnumValueFromField(
+                    'SubscriptionStatusesEnum',
+                    (string)$subscriber->getSubscriberStatus()
+                );
             } else {
                 throw new GraphQlInputException(
-                    __('This is an invalid subscription ID')
+                    __('This is an invalid subscription confirmation code.')
                 );
             }
+        } else {
+            throw new GraphQlInputException(
+                __('This is an invalid subscription ID')
+            );
         }
 
         return [
