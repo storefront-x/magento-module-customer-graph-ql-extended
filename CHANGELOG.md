@@ -15,3 +15,7 @@
 ## [1.0.7] - 2023-01-04
 ### Added
 - Confirmation subscriber for newsletter.
+
+## [1.0.9] - 2023-02-18
+### Added
+- Removed token validation.
