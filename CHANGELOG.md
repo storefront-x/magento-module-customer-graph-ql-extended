@@ -19,3 +19,7 @@
 ## [1.0.9] - 2023-02-18
 ### Added
 - Removed token validation.
+
+## [1.0.10] - 2023-03-08
+### Added
+- added events.xml with observer LogLastLoginAtObserver
