@@ -23,3 +23,7 @@
 ## [1.0.10] - 2023-03-08
 ### Added
 - added events.xml with observer LogLastLoginAtObserver
+
+## [Unreleased]
+### Fixed
+- PHP 8.4/8.5 compatibility: explicit nullable types for parameters with a null default (implicitly nullable parameters are deprecated since PHP 8.4).
