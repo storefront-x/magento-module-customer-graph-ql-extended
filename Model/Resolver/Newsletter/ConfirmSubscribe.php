@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace StorefrontX\CustomerGraphQlExtended\Model\Resolver\Newsletter;
 
 use Magento\Newsletter\Model\SubscriberFactory;
+use Magento\Newsletter\Model\ResourceModel\Subscriber as SubscriberResource;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Config\Element\Field;
@@ -32,17 +33,25 @@ class ConfirmSubscribe implements ResolverInterface
     private $enumLookup;
 
     /**
+     * @var SubscriberResource
+     */
+    private $subscriberResource;
+
+    /**
      * ConfirmSubscribe constructor.
      *
      * @param SubscriberFactory $subscriberFactory
      * @param EnumLookup $enumLookup
+     * @param SubscriberResource $subscriberResource
      */
     public function __construct(
         SubscriberFactory $subscriberFactory,
-        EnumLookup $enumLookup
+        EnumLookup $enumLookup,
+        SubscriberResource $subscriberResource
     ) {
         $this->subscriberFactory = $subscriberFactory;
         $this->enumLookup = $enumLookup;
+        $this->subscriberResource = $subscriberResource;
     }
 
     /**
@@ -71,7 +80,8 @@ class ConfirmSubscribe implements ResolverInterface
             );
         }
 
-        $subscriber = $this->subscriberFactory->create()->load($id);
+        $subscriber = $this->subscriberFactory->create();
+        $this->subscriberResource->load($subscriber, $id);
 
         if (!empty($subscriber->getId()) && !empty($subscriber->getCode())) {
             if ($subscriber->confirm($code)) {
